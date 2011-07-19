@@ -53,9 +53,11 @@
 			$('#presence').append("<div class='dude' id='dude_"+member.id+"'>"+member.info.name+"</div>");
 		});
 	});
+	
 	c.bind('pusher:member_added', function(member){
 		$('#presence').append("<div class='dude' id='dude_"+member.id+"'>"+member.info.name+"</div>");
 	});
+	
 	c.bind('pusher:member_removed', function(member){
 		$('#dude_'+member.id).remove();
 	});

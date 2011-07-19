@@ -12,6 +12,7 @@ gem 'devise'
 gem 'json'
 gem 'jquery-rails'
 gem 'pusher'
+gem 'carrierwave'
 
 # Use unicorn as the web server
 # gem 'unicorn'

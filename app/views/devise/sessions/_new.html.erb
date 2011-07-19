@@ -1,0 +1,29 @@
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<table cellspacing="0">
+	<tbody>
+		<tr>
+			<td class="html7magic"><%= f.label '用户名' %></td>
+			<td class="html7magic"><%= f.label '密码' %></td>
+		</tr>
+		<tr>
+			<td><%= f.text_field :username, :class => 'inputtext' %></td>
+			<td><%= f.password_field :password, :class => 'inputtext' %></td>
+			<td>
+				<label class="uiButton uiButtonConfirm">
+					<%= f.submit '登录' %>
+				</label>
+			</td>
+		</tr>
+		<tr>
+			<td class="login_form_label_field">
+				<% if devise_mapping.rememberable? -%>
+				    <%= f.check_box :remember_me %><%= f.label '保持在登录状态' %>
+				  <% end -%>
+			</td>
+			<td class="login_form_label_field">
+				<%= link_to "忘记密码了？", new_password_path(resource_name) %>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<% end %>

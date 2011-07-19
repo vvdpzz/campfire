@@ -1,14 +1,17 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @channel.name %>
-</p>
-
 <div id="chatOuter">
 	<div id="chat">
 		<%= render :partial => "partials/message",
 							 :collection => @channel.messages_from_redis %>
+	</div>
+</div>
+<div id="docs">
+	<div class="fluploader_wrapper">
+		<label class="fluploader_select uiButton">
+			<input value="选择文件" type="submit">
+		</label>
+		<div class="fluploader_swfdiv">
+			<input id="uploadify" name="uploadify" type="file" />
+		</div>
 	</div>
 </div>
 
@@ -18,6 +21,36 @@
 <% end %>
 
 <script>
+	$(document).ready(function() {
+			$('body').scrollTop($('body')[0].scrollHeight);
+			
+			<% key = Rails.application.config.session_options[:key] %>
+			var uploadify_script_data = {};
+			var csrf_param = $('meta[name=csrf-param]').attr('content');
+			var csrf_token = $('meta[name=csrf-token]').attr('content');
+			uploadify_script_data[csrf_param] = encodeURI(encodeURIComponent(csrf_token));
+			uploadify_script_data['<%= key %>'] = '<%= cookies[key] %>';
+			uploadify_script_data['channel_id'] = "<%= @channel.id %>";
+
+			$('#uploadify').uploadify({
+				uploader  		: '/assets/uploadify.swf',
+				script    		: '/docs',
+				cancelImg		: '/images/cancel.png',
+				auto			: true,
+				multi			: true,
+				removeCompleted : true,
+				scriptData		: uploadify_script_data,
+				wmode			: "transparent",
+				hideButton		: true,
+				height			: 20,
+				width			: 58,
+				queueID			: 'photos_Queue',
+				onComplete		: function(event, ID, fileObj, response, data) {
+					response = eval('(' + response + ')');
+					alert("OK");
+				}
+			});
+	});
 	var pusher = new Pusher('2f20b4687fdaada149b2');
 	var c = pusher.subscribe("channel_<%= @channel.id %>");
 	c.bind('message-create', function(message) {

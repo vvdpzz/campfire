@@ -1,0 +1,43 @@
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:id => 'reg'}) do |f| %>
+	<div id="reg_form_box" class="large_form">
+		<table class="uiGrid editor" cellspacing="0" cellpadding="1">
+			<tbody>
+				<tr>
+					<td class="label">
+						<%= f.label '用户名：' %>
+					</td>
+					<td>
+						<div class="field_container">
+							<%= f.text_field :username, :class => 'inputtext' %>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="label">
+						<%= f.label '电子邮件：' %>
+					</td>
+					<td>
+						<div class="field_container">
+							<%= f.text_field :email, :class => 'inputtext' %>
+						</div>
+					</td>					
+				</tr>
+				<tr>
+					<td class="label">
+						<%= f.label '密码：' %>
+					</td>
+					<td>
+						<div class="field_container">
+							<%= f.password_field :password, :class => 'inputtext' %>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="reg_btn clearfix">
+			<label class="uiButton uiButtonSpecial">
+				<%= f.submit '注册' %>
+			</label>
+		</div>
+	</div>
+<% end %>

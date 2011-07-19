@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
   attr_accessible :username, :email, :password, :remember_me
   
   has_many :messages
+  has_many :docs
 end

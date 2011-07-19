@@ -70,7 +70,9 @@ a:hover{text-decoration:underline}
 }
 
 #docs{
-	float:right;
+	right:100px;
+	top:100px;
+	position:fixed;
 }
 
 label{cursor:pointer;color:#666;font-weight:bold;vertical-align:middle}
@@ -168,4 +170,34 @@ textarea,.inputtext,.inputpassword{border:1px solid #bdc7d8;font-family:"lucida 
 	left: 0px;
 	position: absolute;
 	top: 0px;
+}
+
+
+.uploadifyQueueItem {
+	background-color: white;
+	font: 11px Verdana, Geneva, sans-serif;
+	margin-top: 5px;
+	padding: 10px;
+	width: 350px;
+}
+.uploadifyError {
+	background-color: #FDE5DD !important;
+	border: 2px solid #FBCBBC !important;
+}
+.uploadifyQueueItem .cancel {
+	float: right;
+}
+.uploadifyQueue .completed {
+}
+.uploadifyProgress {
+    background-color: white;
+	padding: 1px;
+	border: 1px solid #949DAD;
+    margin-top: 10px;
+    width: 100%;
+}
+.uploadifyProgressBar {
+    background-color: #D4E4FF;
+    width: 1px;
+    height: 8px;
 }

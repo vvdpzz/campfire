@@ -13,6 +13,11 @@
 			<input id="uploadify" name="uploadify" type="file" />
 		</div>
 	</div>
+	<ol id="filelist">
+	<% @channel.docs.each do |doc| %>
+		<li><%= link_to File.basename(doc.src.url), doc.src.url %> - <%= link_to '删除', doc, :confirm => 'Are you sure?', :method => :delete %></li>
+	<% end %>
+	</ol>
 </div>
 
 <%= form_tag({:controller => 'messages', :action => 'create'}, :remote => true, :id => 'new_message') do %>
@@ -44,10 +49,13 @@
 				hideButton		: true,
 				height			: 20,
 				width			: 58,
-				queueID			: 'photos_Queue',
 				onComplete		: function(event, ID, fileObj, response, data) {
 					response = eval('(' + response + ')');
-					alert("OK");
+					h = [];
+					h.push('<li>');
+					h.push('<a href="' + response.src + '">' + response.name + '</a>');
+					h.push('</li>');
+					$('#filelist').append(h.join(''));
 				}
 			});
 	});

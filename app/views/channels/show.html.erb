@@ -4,20 +4,25 @@
 							 :collection => @channel.messages_from_redis %>
 	</div>
 </div>
-<div id="docs">
-	<div class="fluploader_wrapper">
-		<label class="fluploader_select uiButton">
-			<input value="选择文件" type="submit">
-		</label>
-		<div class="fluploader_swfdiv">
-			<input id="uploadify" name="uploadify" type="file" />
+<div id="right-panel">
+	<h1><%= @channel.name %> - 讨论组</h1>
+	<div id="docs">
+		<div class="fluploader_wrapper">
+			<label class="fluploader_select uiButton">
+				<input value="选择文件" type="submit">
+			</label>
+			<div class="fluploader_swfdiv">
+				<input id="uploadify" name="uploadify" type="file" />
+			</div>
 		</div>
+		<ol id="filelist">
+		<% @channel.docs.each do |doc| %>
+			<li id="doc_<%= doc.id %>">
+			<%= link_to File.basename(doc.src.url), doc.src.url %> by <%= doc.user.username %> - 
+			<%= link_to '删除', doc, :method => :delete, :remote => true %></li>
+		<% end %>
+		</ol>
 	</div>
-	<ol id="filelist">
-	<% @channel.docs.each do |doc| %>
-		<li><%= link_to File.basename(doc.src.url), doc.src.url %> - <%= link_to '删除', doc, :confirm => 'Are you sure?', :method => :delete %></li>
-	<% end %>
-	</ol>
 </div>
 
 <%= form_tag({:controller => 'messages', :action => 'create'}, :remote => true, :id => 'new_message') do %>
@@ -28,7 +33,7 @@
 <script>
 	$(document).ready(function() {
 			$('body').scrollTop($('body')[0].scrollHeight);
-			
+			$('.body').emotions({handle: 'etoggle'});
 			<% key = Rails.application.config.session_options[:key] %>
 			var uploadify_script_data = {};
 			var csrf_param = $('meta[name=csrf-param]').attr('content');
@@ -48,7 +53,7 @@
 				wmode			: "transparent",
 				hideButton		: true,
 				height			: 20,
-				width			: 58,
+				width			: 62,
 				onComplete		: function(event, ID, fileObj, response, data) {
 					response = eval('(' + response + ')');
 					h = [];
@@ -64,6 +69,7 @@
 	c.bind('message-create', function(message) {
 		if (message.uid != "<%= current_user.id %>"){
 			$("#chat").append("<div id='message_'" + message.id + " class='message other'><div class='person'>"+message.name+"</div><div class='body'>"+message.body+"</div></div>");
+			$('.body').emotions({handle: 'etoggle'});
 			$('body').scrollTop($('body')[0].scrollHeight);
 		}
 	});
@@ -75,8 +81,8 @@
 			textarea = document.getElementById("body");
 			if (textarea.value.trim() != ''){
 				$('#chat').append("<div class='message self'><div class='person'><%= current_user.username %></div><div class='body'>"+textarea.value+"</div></div>");
+				$('.body').emotions({handle: 'etoggle'});
 				$('body').scrollTop($('body')[0].scrollHeight);
-				
 				var value = $("#new_message").serialize();
 				$("#new_message")[0].reset();
 				$.post("/messages", value);

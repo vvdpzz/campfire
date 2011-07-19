@@ -69,10 +69,27 @@ a:hover{text-decoration:underline}
 	resize:none;
 }
 
-#docs{
-	right:100px;
-	top:100px;
+#right-panel{
+	top:60;
+	right:0;
 	position:fixed;
+	width:500px;
+}
+
+#docs{
+}
+
+#filelist{
+	height:200px;
+	overflow-y:auto;
+	padding:20px 0;
+}
+
+ol#filelist{
+	margin:0;
+}
+ol#filelist li{
+	padding:6px 0;
 }
 
 label{cursor:pointer;color:#666;font-weight:bold;vertical-align:middle}
@@ -162,7 +179,6 @@ textarea,.inputtext,.inputpassword{border:1px solid #bdc7d8;font-family:"lucida 
 .fcg{color:#808080}
 
 .fluploader_wrapper{
-	margin-left: 4px;
 	display: inline;
 	position: relative;
 }
@@ -171,7 +187,6 @@ textarea,.inputtext,.inputpassword{border:1px solid #bdc7d8;font-family:"lucida 
 	position: absolute;
 	top: 0px;
 }
-
 
 .uploadifyQueueItem {
 	background-color: white;
@@ -200,4 +215,35 @@ textarea,.inputtext,.inputpassword{border:1px solid #bdc7d8;font-family:"lucida 
     background-color: #D4E4FF;
     width: 1px;
     height: 8px;
+}
+
+a[href$='.pdf'] {
+    display:inline-block;
+    padding-left:20px;
+    line-height:18px;
+    background:transparent url(/images/pdf.png) center left no-repeat;
+}
+a[href$='.ppt'], a[href$='.key'] {
+    display:inline-block;
+    padding-left:20px;
+    line-height:18px;
+    background:transparent url(/images/ppt.png) center left no-repeat;
+}
+a[href$='.doc'], a[href$='.rtf'], a[href$='.txt'], a[href$='.wps'] {
+    display:inline-block;
+    padding-left:20px;
+    line-height:18px;
+    background:transparent url(/Images/WordDocIcon.gif) center left no-repeat;
+}
+a[href$='.zip'], a[href$='.gzip'], a[href$='.rar'] {
+    display:inline-block;
+    padding-left:20px;
+    line-height:18px;
+    background:transparent url(/images/zip.png) center left no-repeat;
+}
+a[href$='.jpg'], a[href$='.jpeg'], a[href$='.png'] {
+    display:inline-block;
+    padding-left:20px;
+    line-height:18px;
+    background:transparent url(/images/album.gif) center left no-repeat;
 }

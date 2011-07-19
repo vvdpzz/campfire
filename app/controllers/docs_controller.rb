@@ -8,7 +8,7 @@ class DocsController < ApplicationController
   end
   
   def destroy
-    doc = current_user.docs.find(params[:id])
-    doc.destroy
+    @doc = current_user.docs.find(params[:id])
+    @doc.destroy
   end
 end

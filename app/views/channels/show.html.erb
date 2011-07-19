@@ -6,7 +6,17 @@
 </div>
 <div id="right-panel">
 	<h1><%= @channel.name %> - 讨论组</h1>
+	<hr>
+	
+	<div id="online-users">
+		<h2>在线用户</h2>
+		<div id="presence">
+		</div>
+	</div>
+	<hr>
+	
 	<div id="docs">
+		<h2>共享文档</h2>
 		<div class="fluploader_wrapper">
 			<label class="fluploader_select uiButton">
 				<input value="选择文件" type="submit">
@@ -31,6 +41,30 @@
 <% end %>
 
 <script>
+	var pusher = new Pusher('2f20b4687fdaada149b2');
+	var c = pusher.subscribe("presence-channel_<%= @channel.id %>");
+
+	c.bind('pusher:subscription_succeeded', function(members){
+		$('#presence').empty();
+		members.each(function(member) {
+			$('#presence').append("<div class='dude' id='dude_"+member.id+"'>"+member.info.name+"</div>");
+		});
+	});
+	c.bind('pusher:member_added', function(member){
+		$('#presence').append("<div class='dude' id='dude_"+member.id+"'>"+member.info.name+"</div>");
+	});
+	c.bind('pusher:member_removed', function(member){
+		$('#dude_'+member.id).remove();
+	});
+
+	c.bind('message-create', function(message) {
+		if (message.uid != "<%= current_user.id %>"){
+			$("#chat").append("<div id='message_'" + message.id + " class='message other'><div class='person'>"+message.name+"</div><div class='body'>"+message.body+"</div></div>");
+			$('.body').emotions({handle: 'etoggle'});
+			$('body').scrollTop($('body')[0].scrollHeight);
+		}
+	});
+	
 	$(document).ready(function() {
 			$('body').scrollTop($('body')[0].scrollHeight);
 			$('.body').emotions({handle: 'etoggle'});
@@ -63,15 +97,6 @@
 					$('#filelist').append(h.join(''));
 				}
 			});
-	});
-	var pusher = new Pusher('2f20b4687fdaada149b2');
-	var c = pusher.subscribe("channel_<%= @channel.id %>");
-	c.bind('message-create', function(message) {
-		if (message.uid != "<%= current_user.id %>"){
-			$("#chat").append("<div id='message_'" + message.id + " class='message other'><div class='person'>"+message.name+"</div><div class='body'>"+message.body+"</div></div>");
-			$('.body').emotions({handle: 'etoggle'});
-			$('body').scrollTop($('body')[0].scrollHeight);
-		}
 	});
 	
 	

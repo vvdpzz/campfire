@@ -217,6 +217,19 @@ textarea,.inputtext,.inputpassword{border:1px solid #bdc7d8;font-family:"lucida 
     height: 8px;
 }
 
+#online-users h2{
+	margin-bottom: 10px;
+}
+
+#online-users{
+	height:140px;
+}
+
+.dude{
+	font-size: 14px;
+}
+
+
 a[href$='.pdf'] {
     display:inline-block;
     padding-left:20px;

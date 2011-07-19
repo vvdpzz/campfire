@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
     
     $redis.zadd(key, score, value)
     
-    Pusher["channel_#{params[:channel_id]}"].trigger('message-create', value)
+    Pusher["presence-channel_#{params[:channel_id]}"].trigger('message-create', value)
     render :nothing => true
   end
   

@@ -11,6 +11,7 @@
 	<div id="online-users">
 		<h2>在线用户</h2>
 		<div id="presence">
+			<span class="loading">载入中⋯⋯</span>
 		</div>
 	</div>
 	<hr>
@@ -56,13 +57,13 @@
 	
 	c.bind('pusher:member_added', function(member){
 		$('#presence').append("<div class='dude' id='dude_"+member.id+"'>"+member.info.name+"</div>");
-		$('#chat').append("<div class='message notify'>"+member.info.name+ " 匆匆地来了。 </div>");
+		$('#chat').append("<div class='message notify'>"+member.info.name+ " 来了 </div>");
 		$('body').scrollTop($('body')[0].scrollHeight);
 	});
 	
 	c.bind('pusher:member_removed', function(member){
 		$('#dude_'+member.id).remove();
-		$('#chat').append("<div class='message notify'>"+member.info.name+ " 轻轻地走了。 </div>");
+		$('#chat').append("<div class='message notify'>"+member.info.name+ " 走了 </div>");
 		$('body').scrollTop($('body')[0].scrollHeight);
 	});
 
@@ -81,7 +82,7 @@
 			h.push('<a href="' + doc.src + '">' + doc.filename + '</a>');
 			h.push(' by ' + doc.name);
 			h.push('</li>');
-			$('#filelist').append(h.join(''));
+			$('#filelist').prepend(h.join(''));
 		}
 	});
 	
@@ -122,7 +123,7 @@
 					h.push(' by ' + doc.name);
 					h.push(' - <a href="/docs/'+ doc.id + '" data-method="delete" data-remote="true" rel="nofollow">删除</a>');
 					h.push('</li>');
-					$('#filelist').append(h.join(''));
+					$('#filelist').prepend(h.join(''));
 				}
 			});
 	});

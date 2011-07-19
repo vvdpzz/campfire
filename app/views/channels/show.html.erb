@@ -56,10 +56,14 @@
 	
 	c.bind('pusher:member_added', function(member){
 		$('#presence').append("<div class='dude' id='dude_"+member.id+"'>"+member.info.name+"</div>");
+		$('#chat').append("<div class='message notify'>"+member.info.name+ " 匆匆地来了。 </div>");
+		$('body').scrollTop($('body')[0].scrollHeight);
 	});
 	
 	c.bind('pusher:member_removed', function(member){
 		$('#dude_'+member.id).remove();
+		$('#chat').append("<div class='message notify'>"+member.info.name+ " 轻轻地走了。 </div>");
+		$('body').scrollTop($('body')[0].scrollHeight);
 	});
 
 	c.bind('message-create', function(message) {

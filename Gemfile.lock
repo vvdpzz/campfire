@@ -35,7 +35,7 @@ GEM
     carrierwave (0.5.6)
       activesupport (~> 3.0)
     crack (0.1.8)
-    devise (1.4.0)
+    devise (1.4.2)
       bcrypt-ruby (~> 2.1.2)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)

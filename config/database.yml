@@ -35,5 +35,5 @@ production:
   database: campfire_production
   pool: 5
   username: root
-  password:
+  password: $ngrserver$
   socket: /tmp/mysql.sock

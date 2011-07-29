@@ -36,4 +36,4 @@ production:
   pool: 5
   username: root
   password: $ngrserver$
-  socket: /tmp/mysql.sock
+  # socket: /tmp/mysql.sock

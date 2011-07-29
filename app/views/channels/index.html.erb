@@ -1,23 +1,27 @@
-<h1>Listing channels</h1>
+<div id="content"></div>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<script id="template" type="text/x-handlebars-template">
+{{#each channels}}
+	<a href="/channels/{{id}}">{{name}}</a>
+{{/each}}
+</script>
 
-<% @channels.each do |channel| %>
-  <tr>
-    <td><%= channel.name %></td>
-    <td><%= link_to 'Show', channel %></td>
-    <td><%= link_to 'Edit', edit_channel_path(channel) %></td>
-    <td><%= link_to 'Destroy', channel, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<script id="render" type="text/javascript">
+Handlebars.registerHelper('each', function(context, block) {
+  var ret = "";
+  for(var i=0, j=context.length; i<j; i++) {
+    ret = ret + block(context[i]);
+  }
+  return ret;
+});
 
-<br />
+$.getJSON('/channels.json', function(channels) {
+	var source   = $("#template").html();
+	var template = Handlebars.compile(source);
+	var compiled = template(channels);
 
-<%= link_to 'New Channel', new_channel_path %>
+	$('#content').html(compiled);
+	$('#template').remove();
+	$('#render').remove();
+});
+</script>

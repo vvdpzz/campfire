@@ -1,11 +1,12 @@
-<div id="chatOuter">
-	<div id="chat">
-		<%= render :partial => "partials/message",
-							 :collection => @channel.messages_from_redis %>
-	</div>
+<div id="chat">
+	<%= render :partial => "partials/message", :collection => @channel.messages_from_redis %>
 </div>
+<%= form_tag({:controller => 'messages', :action => 'create'}, :remote => true, :id => 'new_message', :class => 'clearfix') do %>
+	<%= hidden_field :channel_id, @channel.id %>
+  <%= text_area_tag :body, {}, :class => "message_box" %>
+<% end %>
 <div id="right-panel">
-	<h1><%= @channel.name %> - 讨论组</h1>
+	<h1><%= @channel.name %> - 讨论组<span class="small-link"><%= link_to '返回', channels_path %></span></h1>
 	<hr>
 	
 	<div id="online-users">
@@ -15,9 +16,20 @@
 		</div>
 	</div>
 	<hr>
-	
+	<div id="pages">
+		<h2>共享文档<span class="title"> - <%= link_to "添加新文档", new_page_path(:channel_id => @channel.id) %></h2>
+		<% @channel.pages.each do |page| %>
+			<div class="page" id="page_<%= page.id %>">
+				<%= link_to page.title, page%> by <%= page.user.username %> - <%= time_ago_in_words page.created_at %> ago
+				<% if current_user.id == page.user.id %>
+					- <%= link_to '删除', page, :method => :delete, :remote => true %>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+	<hr>
 	<div id="docs">
-		<h2>共享文档</h2>
+		<h2>共享文件</h2>
 		<div class="fluploader_wrapper">
 			<label class="fluploader_select uiButton">
 				<input value="选择文件" type="submit">
@@ -37,12 +49,8 @@
 		<% end %>
 		</ol>
 	</div>
+	
 </div>
-
-<%= form_tag({:controller => 'messages', :action => 'create'}, :remote => true, :id => 'new_message') do %>
-	<%= hidden_field :channel_id, @channel.id %>
-  <%= text_area_tag :body, {}, :class => "message_box" %>
-<% end %>
 
 <script>
 	var pusher = new Pusher('2f20b4687fdaada149b2');
@@ -94,7 +102,7 @@
 	
 	$(document).ready(function() {
 			$('body').scrollTop($('body')[0].scrollHeight);
-			$('.body').emotions({handle: 'etoggle'});
+			
 			<% key = Rails.application.config.session_options[:key] %>
 			var uploadify_script_data = {};
 			var csrf_param = $('meta[name=csrf-param]').attr('content');
@@ -135,7 +143,6 @@
 			textarea = document.getElementById("body");
 			if (textarea.value.trim() != ''){
 				$('#chat').append("<div class='message self'><div class='person'><%= current_user.username %></div><div class='body'>"+textarea.value+"</div></div>");
-				$('.body').emotions({handle: 'etoggle'});
 				$('body').scrollTop($('body')[0].scrollHeight);
 				var value = $("#new_message").serialize();
 				$("#new_message")[0].reset();
@@ -144,3 +151,4 @@
 		}
 	});
 </script>
+<%= javascript_include_tag 'swfobject', 'jquery.uploadify' %>

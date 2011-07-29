@@ -1,17 +1,14 @@
 class ChannelsController < ApplicationController
-  # GET /channels
-  # GET /channels.xml
+
   def index
     @channels = Channel.all
-
+    channels = @channels.map { |channel| render_to_json channel }
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @channels }
+      format.html
+      format.json { render :json => { :channels => channels} }
     end
   end
 
-  # GET /channels/1
-  # GET /channels/1.xml
   def show
     @channel = Channel.find(params[:id])
 
@@ -21,8 +18,6 @@ class ChannelsController < ApplicationController
     end
   end
 
-  # GET /channels/new
-  # GET /channels/new.xml
   def new
     @channel = Channel.new
 
@@ -32,13 +27,10 @@ class ChannelsController < ApplicationController
     end
   end
 
-  # GET /channels/1/edit
   def edit
     @channel = Channel.find(params[:id])
   end
 
-  # POST /channels
-  # POST /channels.xml
   def create
     @channel = Channel.new(params[:channel])
 
@@ -53,8 +45,6 @@ class ChannelsController < ApplicationController
     end
   end
 
-  # PUT /channels/1
-  # PUT /channels/1.xml
   def update
     @channel = Channel.find(params[:id])
 
@@ -69,8 +59,6 @@ class ChannelsController < ApplicationController
     end
   end
 
-  # DELETE /channels/1
-  # DELETE /channels/1.xml
   def destroy
     @channel = Channel.find(params[:id])
     @channel.destroy
@@ -79,5 +67,10 @@ class ChannelsController < ApplicationController
       format.html { redirect_to(channels_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  protected
+  def render_to_json(obj)
+    { :id => obj.id, :name => obj.name }
   end
 end

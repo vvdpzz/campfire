@@ -1,7 +1,7 @@
 <%
 	m = JSON.parse(message)
-	message_class = "message other"
-	message_class = "message self" if current_user.id == m['uid']
+	message_class = "message clearfix other"
+	message_class = "message clearfix self" if current_user.id == m['uid']
 %>
 <div id="message_<%= m['uid'] %>" class="<%= message_class %>">
 	<div class="person"><%= truncate(m['name'], :length => 10, :omission => '.') %></div>

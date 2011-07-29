@@ -1,0 +1,90 @@
+@import "blueprint/reset";
+@import "partials/base";
+@import "blueprint";
+@import "blueprint/scaffolding";
+@import "compass/css3/box-sizing";
+@import "compass/utilities/general/clearfix";
+@import "compass/css3/border-radius";
+@import "partials/pygments";
+body.bp {
+  @include blueprint-typography(true);
+  @include blueprint-utilities;
+  @include blueprint-debug;
+  @include blueprint-interaction;
+}
+
+form.bp {
+  @include blueprint-form;
+  @include blueprint-scaffolding; }
+
+body.two-col {
+  #container {
+    @include container; }
+  #header, #footer {
+    @include column($blueprint-grid-columns); }
+  #sidebar {
+    $sidebar-columns: floor($blueprint-grid-columns / 3);
+    @include column($sidebar-columns, true); }
+  #content {
+    $content-columns: ceil(2 * $blueprint-grid-columns / 3);
+    @include column($content-columns); } }
+
+$mono_fonts: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+
+textarea{
+  resize:none;
+  border:1px solid #ddd;
+  @include box-sizing(border-box);
+  font-family: $mono_fonts;
+}
+.lx-row{
+  padding:10px;
+}
+.lx-row textarea{
+  width:100%;
+}
+.lx-q-title{
+  height:3em;
+  
+  font-size:16px;
+}
+.lx-q-content{
+  height:14em;
+  font-size:14px;
+}
+#wmd-preview{
+	border:2px dashed #ccc;
+	display:block;
+	font-family: $mono_fonts;
+	font-size:14px;
+	padding:2px;
+}
+pre{
+	border: 1px solid #DEDEDE;
+	background-color: ghostWhite;
+	overflow:auto;
+	padding:5px;
+}
+.post{
+	font-family: $mono_fonts;
+	font-size:14px;
+}
+hr{background:#eee;border-width:0;color:#eee;height:1px}
+
+a{cursor:pointer;color:#3b5998;text-decoration:none}
+a:hover{text-decoration:underline}
+
+body.bp .post h2{
+  margin:0;
+  a{
+    color: #4183C4;
+    text-decoration: none;
+  }
+}
+.post .meta .author{
+color: #94BFEA;
+font-weight: bold;
+}
+.published {
+color: #CCC;
+}

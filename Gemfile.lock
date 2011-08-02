@@ -121,6 +121,5 @@ DEPENDENCIES
   nokogiri
   pusher
   rails (= 3.0.9)
-  rake (= 0.8.7)
   redcarpet
   redis

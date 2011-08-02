@@ -6,5 +6,5 @@
 		<span><%= link_to '编辑', [:edit, @page] %>
 	</div>
 	<hr>
-	<%= @page.markdown.html_safe %>
+	<%= markdown(@page.content) %>
 </div>
